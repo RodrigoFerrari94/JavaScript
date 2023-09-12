@@ -11,21 +11,19 @@
             font: normal 1.5em Arial;
            
         }
-        h1{color: brown;
-
-        }
+        
     </style>
 </head>
 <body>
-    <h1>Olá, Mundo!</h1>
-    <p>Já me livrei da maldição.</p>
+    
 
     <script>
-    
-        window.alert('Minha primeira mensagem') 
-        window.confirm('está gostando de javascript') //janela com botão ok e cancelar
-        window.prompt('Qual é seu nome') //vai perguntar seu nome
+       var nome = window.prompt(`Qual seu nome?`)
+       document.write(`Olá, <strong>${nome}</strong>! Seu nome tem ${nome.length} letras.<br>`) 
+       document.write(`Seu nome em maiúsculo é ${nome.toUpperCase()}.<br>`) 
+       document.write(`Seu nome em minúsculo é ${nome.toLowerCase()}.`)
        
+
     </script>
     
 </body>
