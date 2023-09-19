@@ -6,22 +6,51 @@
     <title>Nacionalidade</title>
 </head>
 <body>
-    <h1>Desscubra sua nacionalidade</h1>
-    <div>País que você nasceu:<input type="text" name="txtnac" id="txtnac">
+    <h1>Descubra sua Nacionalidade</h1>
+    <div><Select name="Onde você nasceu?" id="txtnac">
+        <option value="Brasil">Brasil</option>
+        <option value="USA">USA</option>
+        <option value="Irlanda">Irlanda</option>
+        <option value="Itália">Itália</option>
+        <option value="Inglaterra">Inglaterra</option>
+        <option value="outro">Outro</option>
+     
+        
+    </Select>
     <input type="button" value="Verificar" onclick="calcular()" ></div>
     <div id="res"></div>
+    
 
     <script>
 function calcular() {
 
-        var txtnac = window.document.querySelector(`input#txtnac`)
+        var txtnac = window.document.querySelector(`select#txtnac`)
         var res = window.document.querySelector(`div#res`)
         var nac = String(txtnac.value)
 
         res.innerHTML = `<p>Nascendo em ${nac}</p>`
         if (nac == `Brasil`) {
             res.innerHTML += `<p>Você é Brasileiro</p>`
-        } else {res.innerHTML += `<p>Você é estrangeiro</p>`
+        } else if (nac == `França`) {res.innerHTML += `<p>Você é Francês</p>`
+        } 
+        else if (nac == `USA`) {res.innerHTML += `<p>Você é americano</p>`
+        } 
+        else if (nac == `Estados Unidos`) {res.innerHTML += `<p>Você é americano</p>`
+        } 
+        else if (nac == `Irlanda`) {res.innerHTML += `<p>Você é Irlandês</p>`
+        } 
+        else if (nac == `Itália`) {res.innerHTML += `<p>Você é italiano</p>`
+        } 
+        else if (nac == `Inglaterra`) {res.innerHTML += `<p>Você é britânico</p>`
+        } 
+        else if (nac == `brasil`) {res.innerHTML += `<p>Você é brasileiro</p>`
+        } 
+        
+        
+        
+        
+        else {
+            res.innerHTML += `<p>Você é estrangeiro</p>`
         }
 
 
