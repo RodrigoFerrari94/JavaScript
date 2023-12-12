@@ -1,0 +1,241 @@
+@charset "UTF-8";
+ *{
+    margin: 0px;
+    padding: 0px;
+ }
+
+html body{
+   
+    background-color: black;
+    background-image: url(imagens/fundo-mapa.png);
+    
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+
+
+    width: 85vw;
+    max-width: 700px;
+  
+
+    margin: auto;
+
+
+}
+
+
+section{
+    
+    background: rgba(255, 255, 255, 0.866);
+    
+
+    border: solid black;
+    
+}
+
+
+
+
+
+.container{
+     display: flex;
+     justify-content: center;
+}
+
+
+
+header h1{
+
+   
+    text-align: center;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+    padding: 3px;
+    padding-top: 30px;
+        
+ }
+
+ 
+ 
+ 
+
+
+ header #mala{
+   
+
+    width: 60px;
+    
+    position: absolute;
+
+    transform: translate(-208%, 92% );
+
+
+
+        
+ }
+
+   
+
+
+
+nav{
+    background-image:linear-gradient(to right, black,rgb(0, 2, 43),rgb(0, 0, 63),rgb(0, 0, 131));
+    padding: 5px;
+    width: 250px;
+    margin: auto;
+
+    border-radius: 10px;
+    text-align: center;
+
+    margin-bottom: 50px;
+    z-index: 1;
+    
+}
+nav a{
+    font-size: 0.9em;
+    color: white;
+    padding: 3px;
+    margin: 2px;
+    text-decoration: none;
+    
+   
+}
+nav a:hover{
+    text-decoration: underline;
+    color: gray;
+    text-transform: uppercase;
+}
+
+
+
+#aviao{
+   
+    width: 250px;
+    
+    position: absolute;
+    transform: translate(21%, -4%);
+    
+
+ 
+}
+
+main #balao{
+    margin: auto;
+    display: block;
+   
+    width: 200px;
+    height: 160px;
+
+}
+
+main div.container p{
+    width: 110px;
+    
+    padding-right: 10px;
+    text-indent: 10px;
+    text-align: justify;
+    background-color: rgba(255, 254, 254, 0.496);
+    border-radius: 15px;
+    box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.382);
+    margin-bottom: 8px;
+  
+   
+}
+
+
+main img#familia{
+    width: 130px;
+    padding-left: 10px;
+    
+    
+    
+}
+main h2{
+    font-family: cursive;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 3px;
+
+    margin: auto;
+    margin-top: 40px;
+
+    background-color: rgba(255, 255, 255, 0.736);
+    color: rgb(51, 51, 51);
+
+    width: 100px;
+
+    border-radius: 25px;
+    border: 2px solid rgb(0, 0, 0);
+    box-shadow: 0px 4px 0px 0px rgba(6, 0, 68, 0.856);
+    
+
+ 
+}
+
+main div#galeria{
+    width: 80%;
+    height: 200px;
+    margin: auto;
+    background-color: black;
+    margin-top: 30px;
+    overflow: hidden;
+    position: relative;
+}
+
+main div div#fotos {
+
+    display: flex;
+    height: 200px;
+    object-fit: cover;
+    animation: scrollAnimation 15s linear infinite;
+  }
+  @keyframes scrollAnimation {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+section.secundaria header h1{
+    margin-top: 30px;
+    margin-bottom: 40px;
+  
+ }
+
+ section.secundaria nav{
+    background-image:linear-gradient(to right, black,rgb(43, 0, 0),rgb(63, 0, 0),rgb(131, 0, 0));
+ }
+
+section.secundaria main p{
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 2em;
+   }
+
+a.retornar{
+ background-color: white;
+ font-size: 1.2em;
+
+
+ 
+}
+
+
+
+
+footer{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    background-color: white;
+    text-align: center;
+    margin-top: 30px;
+    padding-bottom: 10px;
+}
+
+
+  
