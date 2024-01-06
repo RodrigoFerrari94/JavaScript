@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melhores Lembranças</title>
+</head>
+<body>
+    <form onsubmit="adicionar(); return false;">
+        <label for="lemb">Digite uma lembrança:</label><input type="text" name="lemb" id="lemb"><input type="submit" value="Adicionar" >
+        <div id="res"></div>
+    </form>
+    <script>
+    "use strict";
+    let lem = []
+    function adicionar() {
+        if (!document.getElementById('lemb').value.trim()) return;
+        lem.push(document.getElementById('lemb').value)
+        listar()
+        lemb.value = ""
+    }
+    function remover(indice){
+        lem.splice(indice, 1) 
+        listar()
+    }
+    function listar(){
+        let res = document.getElementById('res')
+        res.innerHTML = (lem == 0) ? '': 'Lembranças'
+        lem.forEach((elemento, indice) => res.innerHTML += `<p>${elemento} <a href="#" onclick="remover(${indice})">Remover</a></p>`)
+        res.innerHTML += (lem == 0) ? '': 'Melhores Lembranças'
+        let maiorTamanho = lem.reduce(( max, atual) => (atual.length > max.length ? atual : max), '')
+        res.innerHTML += lem.reduce((accumulator, atual) => (atual.length === maiorTamanho.length) ? `${accumulator}<p>${atual}</p>` : accumulator, '')
+    }
+   </script>
+</body>
+</html>

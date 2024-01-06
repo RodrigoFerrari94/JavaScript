@@ -3,14 +3,23 @@ let lista = document.querySelector('select#flista')
 let res = document.querySelector('div#res')
 let valores = []
 
+/*
 function isNumero(n){
-if(Number(n) >= 1 && Number(n) <=100){
-    return true
-}else{
-    return false
+    if(Number(n) >= 1 && Number(n) <=100){
+        return true
+    }else{
+        return false
+    }
 }
-}
-
+*/
+const isNumero = function (n){
+        if(Number(n) >= 1 && Number(n) <=100){
+            return true
+        }else{
+            return false
+        }
+        }
+            
 function inLista(n, l){
     if (l.indexOf(Number(n)) != -1) {
         return true
@@ -43,19 +52,19 @@ function finalizar(){
         alert('Adicione valores antes de finalizar!')
     }else{
         let total = valores.length
-        let maior = valores[0]
-        let menor = valores[0]
+        let maior = Math.max(...valores)
+        let menor = Math.min(...valores)
         let soma = 0
         let media = 0
 
         for(let pos in valores){
             soma += valores[pos]
 
-            if(valores[pos] > maior)
+/*            if(valores[pos] > maior)
             maior = valores[pos]
             if(valores[pos] < menor)
             menor = valores[pos]
-        
+  */      
         }
 
         media = soma / total

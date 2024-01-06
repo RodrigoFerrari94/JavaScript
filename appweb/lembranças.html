@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melhores Lembranças</title>
+</head>
+<body>
+    <form onsubmit="adicionar(); return false;">
+    <label for="lemb">Digite uma lembrança:</label><input type="text" name="lemb" id="lemb"><input type="submit" value="Adicionar" >
+    <div id="res"></div>
+   </form>
+   <script>
+    let lem = []
+    let res = document.getElementById('res')
+    function adicionar(){
+        if(document.getElementById('lemb').value.trim() !== '') {
+            lem.push(document.getElementById('lemb').value)
+            listar()
+            lemb.value = ""
+        }
+    }
+    function remover(indice){
+        lem.splice(indice, 1) 
+        listar()
+    }
+    function listar(){
+        if(lem != 0) melhor()
+        res.innerHTML = (lem == 0) ? '': 'Lembranças'
+        for(let i = 0; i < lem.length; i++){
+            res.innerHTML += '<p>'+lem[i]+ '  <a href="#" onclick="remover(' + i + ')">Remover</a></p>'
+        }
+           //lem.forEach((elemento, indice) => res.innerHTML += `<p>${elemento} <a href="#" onclick="remover(${indice})">Remover</a></p>`)
+
+           // res.innerHTML += lem.map((elemento, indice) => `<p>${elemento} <a href="#" onclick="remover(${indice})">Remover</a></p>`).join('')
+
+        //res.innerHTML += lem.reduce((accumulator, currentValue, currentIndex) => `${accumulator}<p>${currentValue} <a href="#" onclick="remover(${currentIndex})">Remover</a></p>`, '');
+
+        /* res.innerHTML += lem.reduce(function(accumulator, currentValue, currentIndex) {
+            return `${accumulator}<p>${currentValue} <a href="#" onclick="remover(${currentIndex})">Remover</a></p>`
+        }, '')*/
+
+        if (lem != 0) {
+            res.innerHTML += 'Melhores Lembranças'
+            for (let i = 0; i < maiores.length; i++) {
+                res.innerHTML += '<p>' + lem[maiores[i]] + '</p>'
+
+
+            }
+        }
+    }
+    function melhor(){
+        let maior = lem[0].length;
+        maiores = [0]
+        for (let ind = 1; ind < lem.length; ind++) {
+            let atual = lem[ind].length;
+            if (atual > maior) {
+                maior = atual
+                maiores = [ind]
+            } else if (atual === maior) {
+                maiores.push(ind);
+            }
+        }
+    }
+   </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
