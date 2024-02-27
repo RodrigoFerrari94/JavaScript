@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alencar de Oliveira</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 5px;
+        }
+       h1{
+        text-align: center;
+       }
+       main{
+        width: 700px;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.241);
+
+       }
+       div{
+        width: 700px;
+        margin: auto;
+       }
+        div#container{
+        width: 650px;    
+        font-family: Arial, Helvetica, sans-serif;
+        border-radius: 10px;
+        color: white;
+        background-color: grey;
+        display: flex;
+        padding: 8px;
+        margin: 8px;
+    }
+        #container label{
+            margin-left: 10px;
+
+        }
+        input[type="number"]{
+            width: 3,5px;
+        }
+        
+        #usuario{
+            margin: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5em;
+            display: flex;
+        
+        }
+        #usuario p{
+            margin-left: 10px;
+        }
+         div#resultado p{
+            width: 320px;
+            font-family: Arial, Helvetica, sans-serif;
+            display: block;
+            margin: 3.5px;
+
+        }
+        div#exer{
+           
+            width: 320px;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.319);
+            border: 1px solid gray;
+            margin: 5px;
+            padding: 5px;
+
+        
+        }
+
+        input[type="button"]{
+            margin-top: 10px;
+
+}
+
+        p.titulo{
+            font-size:0.6em;
+}
+        p.titulo1{
+            font-size:0.8em;
+}
+
+@media only screen and (max-width: 600px) {
+ 	
+    main {
+        width: 90%;
+    }
+    div#container {
+        width: 90%;
+    }
+    p.title{
+        padding:3px;
+        
+}
+     
+    div#resultado p {
+        width: 100%; 
+
+        margin: 3px;
+        padding: 3px;
+    }
+    div#exer{
+        width: 280px;
+    }
+    div#exer p{
+        width:320px;
+
+}
+    input[type="number"] {
+        width:20px;
+    }
+    select{
+        height: 30px;
+        margin-top:30px
+    }
+    div{
+        width:90%;
+}
+
+    
+}
+
+        
+        
+        
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Calcule seu 1 RM</h1>
+        <div id="container">
+            <p>Nome:<input type="text" name="nome" id="nome"></p>
+            <label for="treino">Escolha um treino para adicionar o exercício:</label>
+            <select name="treino" id="treino">
+                <option value="Treino-A">A</option>
+                <option value="Treino-B">B</option>
+                <option value="Treino-C">C</option>
+                <option value="Treino-D">D</option>
+                <option value="Treino-E">E</option>
+                <option value="Treino-F">F</option>
+        
+            </select>
+        </div>
+        <label for="nivel">Qual nível você se qualifica?</label>
+        <select name="nivel" id="nivel">
+            <option value="iniciante">Iniciante</option>
+            <option value="experiente">Experiente</option>
+        </select>
+        <p>Escreva o nome do exercicio:<input type="text" name="exercicio" id="exercicio"></p>
+        <label for="rm">Repeticões:</label><input type="number" name="rm" id="repetiçaomax" min="1" max="10">
+        <p>Carga:<input type="number" name="carga" id="cargakg">Kg.</p>
+        <p>Barras ou Equipamentos:<input type="number" name="barra" id="barrakg">Kg.</p><p>Peso corporal:</p>
+        <p>90%(ex:Barra Fixa, Paralela, Panturrilha): <input type="number" name="corpo90" id="corpokg90">Kg.</p>
+        <p>70%(ex:Agachamentos): <input type="number" name="corpo70" id="corpokg70">Kg.</p>
+        <p>40%(ex:Apoio, elevacão pélvica): <input type="number" name="corpo40" id="corpokg40">Kg.</p>
+        <p>20%(ex:Abdominais): <input type="number" name="corpo20" id="corpokg20">Kg.</p>
+        <label for="objetivo">Selecione um Objetivo:</label>
+        <select name="objetivo" id="objetivo">
+            <option value="adaptacao">Adaptação</option>
+            <option value="resistencia">Resistência a Fadiga Muscular</option>
+            <option value="hipertrofia">Hipertrofia Muscular</option>
+            <option value="forca">Aumento de Força Máxima</option>
+        </select>
+        <p><input type="button" value="Calcule 1RM" onclick="calcular()"></p>
+        <div id="print">
+            <div id="usuario"></div>
+            <div id="header"></div>
+            <div id="resultado"></div>
+            <p><input type="button" value="Adicionar ao Treino" onclick="montar()"></p>
+        </div>
+    </main>
+    <div><input type="button" value="Limpar" onclick="limpar()"></div>
+    <div><input type="button" value="Gerar Treino" onclick="gerarPDF()"></div>
+<fieldset>
+<legend>Histórico de Exercícios</legend>
+    <div id="historico"></div>
+    <input type="button" value="Gerar Histórico" onclick="gerarHistorico()">
+
+<input type="button" value="Excluir Históricos" onclick="excluirHistorico()">
+</fieldset>
+  <div><input type="button" value="Imprimir Histórico" onclick="historicoPDF()"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+<script>
+            let treino = []
+            let todosHistoricos = []
+            let nome,nivel,rm, barra,corpo90,corpo70,corpo40,corpo20,exercicio,usuario,resultado,header,treinoTipo,formula,formulaGeral,carga,cargaMinima,cargaMax,historico;
+        
+          
+        function calcular(){
+            nome = document.getElementById('nome').value;
+            nivel = document.getElementById('nivel').value;
+            formula = ''
+            rm = Number(document.getElementById('repetiçaomax').value);
+            carga = Number(document.getElementById('cargakg').value);
+            barra = Number(document.getElementById('barrakg').value);
+            corpo90 = Number(document.getElementById('corpokg90').value)*90/100;
+            corpo70 = Number(document.getElementById('corpokg70').value)*70/100;
+            corpo40 = Number(document.getElementById('corpokg40').value)*40/100;
+             corpo20 = Number(document.getElementById('corpokg20').value)*20/100;
+
+            carga += barra + corpo90+corpo70+corpo40+corpo20;
+
+
+            exercicio = document.getElementById('exercicio').value;
+            usuario = document.getElementById('usuario');
+            treinoTipo = document.getElementById('treino').value;
+            resultado = document.getElementById('resultado');
+            header = document.getElementById('header');
+            
+            historico = document.getElementById('historico');
+            
+            
+            cargaMinima = '';
+            cargaMax = '';
+            if(rm < 1 || carga <= 1 || exercicio == ''){
+                window.alert('[ERRO] Preencha os dados corretamente!!!');
+               
+            }else{
+                if(rm === 1){
+                formula = carga
+                }else if(nivel === 'iniciante'){
+                formula = Math.round(0.033 * rm * carga + carga);
+                } else if(nivel === 'experiente'){
+                formula =  Math.round(carga * (1 + 0.025 * rm ))
+                };
+                formulaGeral = Math.round(formula-barra-corpo90-corpo70-corpo40-corpo20);
+                usuario.innerHTML = '';
+                usuario.innerHTML = `<p class="title"><strong>${nome}</strong></p><p class="title"> ${treinoTipo}</p>`;
+                header.innerHTML = `<h2>${exercicio}</h2>`;
+                
+                header.innerHTML += `<p class="titulo">1RM ≈ <strong>${formulaGeral} KG</strong>.</p>`;
+
+              todosHistoricos.push(`<h2>${exercicio}/${nome}/</h2><p class="titulo">1RM ≈ <strong>${formulaGeral} KG</strong>. ${rm} repeticões. Carga: ${document.getElementById('cargakg').value}Kg. Barra ou Equipamentos: ${barra}Kg. Peso Corporal: ${document.getElementById('corpokg90').value}${document.getElementById('corpokg70').value}${document.getElementById('corpokg40').value}${document.getElementById('corpokg20').value}KG.</p>`)
+                
+                
+              };
+
+            
+       };
+     function montar() {
+if(formulaGeral != undefined ){
+  switch (document.getElementById('objetivo').value) {
+            case "adaptacao":
+                cargaMinima = Math.round((formula*45/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                
+                cargaMax = Math.round((formula*55/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                treino.push(`<div id=exer><p class="titulo1">Adaptação: <strong>${exercicio}</strong></p>
+<p>1RM ≈ <strong>${formulaGeral} KG</strong>.</p>
+<p>Serie: 3</p><p>Repetições: 10 a 15</p>
+                    <p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 0:45 min a 1:30 min</p></div>`);    
+           break;
+            case "resistencia":
+                cargaMinima = Math.round((formula*60/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                cargaMax = Math.round((formula*70/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                treino.push(`<div id=exer><p class="titulo1">Resistência: <strong>${exercicio}</strong></p>
+<p>1RM ≈ <strong>${formulaGeral} KG</strong>.</p>
+<p>Serie: 3</p><p>Repetições: 15 a 30</p><p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 0:30 min a 2:00 min</p></div>`);
+                break;
+            case "hipertrofia":
+                cargaMinima = Math.round((formula*65/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                cargaMax = Math.round((formula*85/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                treino.push(`<div id=exer><p class="titulo1">Hipertrofia: <strong>${exercicio}</strong></p>
+<p>1RM ≈ <strong>${formulaGeral} KG</strong>.</p><p>Serie: 3 a 4</p><p>Repetições: 8 a 15</p><p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 1:00 min a 3:00 min</p></div>`);
+                break;
+            case "forca":
+                cargaMinima = Math.round((formula*85/100)-barra-corpo90-corpo70-corpo40-corpo20);
+                cargaMax = Math.round(formula-barra-corpo90-corpo70-corpo40-corpo20); 
+                treino.push(`<div id=exer><p class="titulo1">Força: <strong>${exercicio}</strong></p>
+<p>1RM ≈ <strong>${formulaGeral} KG</strong>.</p><p>Serie:4 a 6</p><p>Repetições: 3 a 6</p><p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 3:00 min a 5:00 min</p></div>`);
+                break;
+            };
+            }
+
+            resultado.innerHTML = "";
+            treino.forEach((item, index) => {
+                resultado.innerHTML += item;
+                resultado.innerHTML += `<button onclick="apagar(${index})">Apagar</button>`;
+            });
+
+        }
+
+        function apagar(index) {
+            header.innerHTML = '';
+            formulaGeral = undefined;
+        treino.splice(index, 1);
+            montar();
+            
+        }
+       function limpar(){
+       
+        header.innerHTML = '';
+        formulaGeral = undefined
+       };
+
+       function gerarPDF() {
+            header.innerHTML = '';
+            var element = document.getElementById('print');
+       
+
+
+            html2pdf(element);
+        
+
+}
+
+            function historicoPDF() {
+            
+            var element = document.getElementById('historico');
+
+            html2pdf(element);
+}
+
+
+     function gerarHistorico(){
+
+historico.innerHTML = "";
+            todosHistoricos.forEach((item, index) => {
+                historico.innerHTML += item;
+                
+            });
+
+}
+
+     function excluirHistorico(){
+     todosHistoricos = [];
+     gerarHistorico();
+}
+      
+
+
+
+
+       
+    </script>
+
+
+</body>
+</html>

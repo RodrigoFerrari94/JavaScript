@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ricardo</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 5px;
+        }
+       h1{
+        text-align: center;
+       }
+       main{
+        width: 700px;
+        margin: auto;
+        background-color: rgba(0, 0, 0, 0.241);
+
+       }
+       div{
+        width: 700px;
+        margin: auto;
+       }
+        div#container{
+        width: 650px;    
+        font-family: Arial, Helvetica, sans-serif;
+        border-radius: 10px;
+        color: white;
+        background-color: grey;
+        display: flex;
+        padding: 8px;
+        margin: 8px;
+    }
+        #container label{
+            margin-left: 10px;
+
+        }
+        input[type="number"]{
+            width: 3,5px;
+        }
+        
+        #usuario{
+            margin: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.5em;
+            display: flex;
+        
+        }
+        #usuario p{
+            margin-left: 10px;
+        }
+         div#resultado p{
+            width: 320px;
+            font-family: Arial, Helvetica, sans-serif;
+            display: block;
+            margin: 3.5px;
+
+        }
+        div#exer{
+           
+            width: 320px;
+            box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.319);
+            border: 1px solid gray;
+            margin: 5px;
+            padding: 5px;
+
+        
+        }
+
+        input[type="button"]{
+            margin-top: 10px;
+
+}
+
+        p.titulo{
+            font-size:0.6em;
+}
+        p.titulo1{
+            font-size:0.8em;
+}
+
+@media only screen and (max-width: 600px) {
+ 	
+    main {
+        width: 90%;
+    }
+    div#container {
+        width: 90%;
+    }
+    p.title{
+        padding:3px;
+        
+}
+     
+    div#resultado p {
+        width: 100%; 
+
+        margin: 4.8px;
+        padding: 4.8px;
+    }
+    div#exer {
+        width: 280px;
+    }
+    div#exer p{
+        width:320px;
+
+}
+    input[type="number"] {
+        width:20px;
+    }
+    select{
+        height: 30px;
+        margin-top:30px
+    }
+    div{
+        width:90%;
+}
+
+    
+}
+
+        
+        
+        
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Calcule seu 1 RM</h1>
+        <div id="container">
+            <p>Nome:<input type="text" name="nome" id="nome"></p>
+            <label for="treino">Escolha um treino para adicionar o exercício:</label>
+            <select name="treino" id="treino">
+                <option value="Treino-A">A</option>
+                <option value="Treino-B">B</option>
+                <option value="Treino-C">C</option>
+                <option value="Treino-D">D</option>
+                <option value="Treino-E">E</option>
+                <option value="Treino-F">F</option>
+        
+            </select>
+        </div>
+        <label for="nivel">Qual nível você se qualifica?</label>
+        <select name="nivel" id="nivel">
+            <option value="iniciante">Iniciante</option>
+            <option value="experiente">Experiente</option>
+        </select>
+        <p>Escreva o nome do exercicio:<input type="text" name="exercicio" id="exercicio"></p>
+        <label for="rm">Quantas repetições máximas você realizou? </label><input type="number" name="rm" id="repetiçaomax" min="1" max="10">
+        <p>Qual a carga você utilizou em Anilhas?<input type="number" name="carga" id="cargakg">Kg.</p>
+        <p>Qual a carga utilizou de barras ou outros equipamentos?<input type="number" name="barra" id="barrakg">Kg.</p><p>Se esta levantando o peso do corpo, como Agachamento, escreva seu peso:<input type="number" name="corpo" id="corpokg">Kg.</p>
+        <label for="objetivo">Selecione um Objetivo:</label>
+        <select name="objetivo" id="objetivo">
+            <option value="adaptacao">Adaptação</option>
+            <option value="resistencia">Resistência a Fadiga Muscular</option>
+            <option value="hipertrofia">Hipertrofia Muscular</option>
+            <option value="forca">Aumento de Força Máxima</option>
+        </select>
+        <p><input type="button" value="Calcule 1RM" onclick="calcular()"></p>
+            <div id="print">
+            <div id="usuario"></div>
+            <div id="resultado"></div>
+</div>
+    </main>
+    <div><input type="button" value="Limpar" onclick="limpar()"></div>
+    <div><input type="button" value="Gerar Treino" onclick="gerarPDF()"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script>
+        
+
+        function calcular(){
+            let nome = document.getElementById('nome').value;
+            let nivel = document.getElementById('nivel').value;
+            let formula = ''
+            let rm = Number(document.getElementById('repetiçaomax').value);
+            let carga = Number(document.getElementById('cargakg').value);
+            let barra = Number(document.getElementById('barrakg').value);
+            let corpo = Number(document.getElementById('corpokg').value)/2;
+
+            carga += barra + corpo;
+
+
+            let exercicio = document.getElementById('exercicio').value;
+            let usuario = document.getElementById('usuario');
+            let treino = document.getElementById('treino').value;
+            let resultado = document.getElementById('resultado');
+            
+            
+            let cargaMininma = '';
+            let cargaMax = '';
+            if(rm < 1 || rm > 15 || carga <= 1 || exercicio == ''){
+                window.alert('[ERRO] Preencha os dados corretamente!!!');
+               
+            }else{
+                if(nivel === 'iniciante'){
+                formula = Math.round(0.033 * rm * carga + carga);
+                } else if(nivel === 'experiente'){
+                formula =  Math.round(carga * (1 + 0.025 * rm)) 
+                };
+                let formulaGeral = formula-barra-corpo;
+                usuario.innerHTML = '';
+                usuario.innerHTML += `<p class="title"><strong>${nome}</strong><p><p class="title"> ${treino}</p>`;
+                resultado.innerHTML += `<h2>${exercicio}</h>`;
+                resultado.innerHTML += `<p class="titulo">1RM ≈ <strong>${formulaGeral} KG</strong>.</p>`;
+                switch (document.getElementById('objetivo').value) {
+            case "adaptacao":
+                cargaMinima = Math.round((formula*45/100)-barra-corpo);
+                
+                cargaMax = Math.round((formula*55/100)-barra-corpo);
+                resultado.innerHTML += `<div id=exer><p class="titulo1">Adaptação: <strong>${exercicio}</strong></p><p>Serie: 3</p><p>Repetições: 10 a 15</p>
+                    <p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 0:45 min a 1:30 min</p></div>`;
+                break;
+            case "resistencia":
+                cargaMinima = Math.round((formula*60/100)-barra-corpo);;
+                cargaMax = Math.round((formula*70/100)-barra-corpo);;
+                resultado.innerHTML += `<div id=exer><p class="titulo1">Resistência: <strong>${exercicio}</strong></p><p>Serie: 3</p><p>Repetições: 15 a 18</p><p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 0:30 min a 2:00 min</p></div>`;
+                break;
+            case "hipertrofia":
+                cargaMinima = Math.round((formula*65/100)-barra-corpo);;
+                cargaMax = Math.round((formula*85/100)-barra-corpo);;
+                resultado.innerHTML += `<div id=exer><p class="titulo1">Hipertrofia: <strong>${exercicio}</strong></p><p>Serie: 3 a 4</p><p>Repetições: 8 a 15</p><p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 1:00 min a 3:00 min</p></div>`;
+                break;
+            case "forca":
+                cargaMinima = Math.round((formula*85/100)-barra-corpo);;
+                cargaMax = formula-barra-corpo; 
+                resultado.innerHTML += `<div id=exer><p class="titulo1">Força: <strong>${exercicio}</strong></p><p>Serie:4 a 6</p><p>Repetições: 3 a 6</p><p>carga: Entre ${cargaMinima}Kg e ${cargaMax}Kg</p><p>Descanso: 3:00 min a 5:00 min</p></div>`;
+                break;
+            };
+            
+
+
+                
+            };
+            
+       };
+       function limpar(){
+        resultado.innerHTML = '';
+
+       };
+       function gerarPDF() {
+            var element = document.getElementById('print');
+
+            html2pdf(element);
+        }
+
+       
+
+
+
+       
+    </script>
+
+
+</body>
+</html>
